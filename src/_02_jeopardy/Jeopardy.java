@@ -47,7 +47,25 @@ public class Jeopardy implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		quizPanel = new JPanel();
 		frame.setLayout(new BorderLayout());
-
+		
+		frame.setTitle("JEOPARDY");
+		JPanel panel = createHeader("JEOPARDY");
+		
+		quizPanel.add(panel);
+		firstButton = createButton("200");
+		quizPanel.add(firstButton);
+		firstButton.addActionListener(this);
+		secondButton = createButton("400");
+		secondButton.addActionListener(this);
+		quizPanel.add(secondButton);
+		thirdButton = createButton("600");
+		thirdButton.addActionListener(this);
+		quizPanel.add(thirdButton);
+		fourthButton = createButton("800");
+		fourthButton.addActionListener(this);
+		quizPanel.add(fourthButton);
+		frame.add(quizPanel);
+		
 		// 1. Make the frame show up
 
 		// 2. Give your frame a title
@@ -82,6 +100,7 @@ public class Jeopardy implements ActionListener {
 		 */
 		
 		frame.pack();
+		frame.show();
 		quizPanel.setLayout(new GridLayout(buttonCount + 1, 3));
 		frame.add(makeScorePanel(), BorderLayout.NORTH);
 		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().height,
@@ -90,7 +109,10 @@ public class Jeopardy implements ActionListener {
 
 
 	private JButton createButton(String dollarAmount) {
-		
+		JButton button = new JButton();
+		button.setSize(200,100);
+		button.setText(dollarAmount);
+		buttonCount++;
 		// Create a new JButton
 
 		// Set the text of the button to the dollarAmount
@@ -99,16 +121,26 @@ public class Jeopardy implements ActionListener {
 
 		// Return your new button instead of the temporary button
 
-		return new JButton("temporary button");
+		return button;
 	}
 
 	@Override
     public void actionPerformed(ActionEvent e) {
 		
-		// Remove this temporary message after testing:
-		JOptionPane.showMessageDialog(null, "pressed " + ((JButton) e.getSource()).getText() + " button");
-
 		JButton buttonPressed = (JButton) e.getSource();
+		if (buttonPressed==firstButton) {
+			askQuestion("What song did Deep Cut collaborate on with the Squid Sisters?", "Calamari Inkcantation 3MIX", 200);
+		}
+		buttonPressed.setText("");
+		if (buttonPressed==secondButton) {
+			askQuestion("What song did Deep Cut collaborate on with Fire v. Ice?", "Suffer No Fools", 400);
+		}
+		if (buttonPressed==thirdButton) {
+			askQuestion("What is the real name of the song that goes BANG BING?", "Seep and Destroy", 600);
+		}
+		if (buttonPressed==fourthButton) {
+			askQuestion("Is agent 38 canon?", "Yes", 800);
+		}
 		// If the buttonPressed was the firstButton
 
 			// Call the askQuestion() method
@@ -128,8 +160,17 @@ public class Jeopardy implements ActionListener {
 		// Use the playJeopardyTheme() method to play music while the use thinks of an answer
 		
 		// Remove this temporary message and replace it with a pop-up that asks the user the question
-		JOptionPane.showMessageDialog(null, "this is where the question will be asked");
-		
+		playJeopardyTheme();
+		String ques = JOptionPane.showInputDialog(null, question);
+		stopJeopardyTheme();
+		if(ques.equalsIgnoreCase(correctAnswer)) {
+			JOptionPane.showMessageDialog(null, "Correct!");
+			score+=prizeMoney;
+		}else{
+			JOptionPane.showMessageDialog(null, "Incorrect!");
+			score-=prizeMoney;
+		}
+		updateScore();
 		// Stop the theme music when they have entered their response.
 		
 		// If the answer is correct
