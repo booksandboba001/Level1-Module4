@@ -1,6 +1,26 @@
 package _08_pig_latin;
 
-public class PigLatinTranslator {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class PigLatinTranslator implements ActionListener {
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JButton english = new JButton();
+	JButton latin = new JButton();
+	public void run(){		
+		english.setSize(10,10);
+		latin.setSize(10,10);
+		english.setText("To English");
+		latin.setText("To Pig Latin");
+		
+		english.addActionListener(this);
+		latin.addActionListener(this);
+	}
     /**
      * Method to translate a english to pig latin.
      * 
@@ -120,4 +140,12 @@ public class PigLatinTranslator {
                 return i;
         return 0;
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		JButton buttonPressed = (JButton) e.getSource();
+		if(buttonPressed==english) {
+			translatePigLatinToEnglish("");
+		}
+	}
 }
