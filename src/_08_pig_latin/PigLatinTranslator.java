@@ -17,6 +17,9 @@ public class PigLatinTranslator implements ActionListener {
 		latin.setSize(10,10);
 		english.setText("To English");
 		latin.setText("To Pig Latin");
+		english.setVisible(true);
+		panel.add(english);
+		frame.add(panel);
 		
 		english.addActionListener(this);
 		latin.addActionListener(this);
